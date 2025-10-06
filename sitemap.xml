@@ -2,18 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://fpieseljust.github.io/dwec25-26/</loc>
-         <lastmod>2025-09-15</lastmod>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/about/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/enlla%C3%A7os/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Pildores/BD/camps-calculats/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Pildores/BD/herencia-especialitzacio/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Pildores/JS/classes_herencia/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Pildores/JS/contenidor_mysql/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Pildores/JS/convencio_noms/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Pildores/JS/entrada_eixida/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Pildores/JS/funcions_arrays/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Pildores/JS/import_export/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Pildores/Node/npm_init/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Tasques/BDD/</loc>
+         <lastmod>2025-10-06</lastmod>
+    </url>
+    <url>
+         <loc>https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Tasques/ExerciciPOO/</loc>
+         <lastmod>2025-10-06</lastmod>
     </url>
     <url>
          <loc>https://fpieseljust.github.io/dwec25-26/info/guia_alumne_DI/</loc>
-         <lastmod>2025-09-15</lastmod>
+         <lastmod>2025-10-06</lastmod>
     </url>
     <url>
          <loc>https://fpieseljust.github.io/dwec25-26/info/qualificacio/rubrica/</loc>
-         <lastmod>2025-09-15</lastmod>
-    </url>
-    <url>
-         <loc>https://fpieseljust.github.io/dwec25-26/unitats/U0%20-%20Rep%C3%A0s%20de%20JS/Tasques/ExerciciPOO/</loc>
-         <lastmod>2025-09-15</lastmod>
+         <lastmod>2025-10-06</lastmod>
     </url>
 </urlset>

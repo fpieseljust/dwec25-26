@@ -1,0 +1,1222 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://fpieseljust.github.io/dwec25-26/Projecte%20Biblioteca/Pildores/JS/contenidor_mysql/">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
+    
+    
+      
+        <title>Documentació per configurar MySQL en Docker amb un script SQL i persistència de dades - Desenvolupament en entorn client - 2n DAW - IES Jaume II "El Just"</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.35f28582.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#documentacio-per-configurar-mysql-en-docker-amb-un-script-sql-i-persistencia-de-dades" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Desenvolupament en entorn client - 2n DAW - IES Jaume II &#34;El Just&#34;" class="md-header__button md-logo" aria-label="Desenvolupament en entorn client - 2n DAW - IES Jaume II "El Just"" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Desenvolupament en entorn client - 2n DAW - IES Jaume II "El Just"
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Documentació per configurar MySQL en Docker amb un script SQL i persistència de dades
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Desenvolupament en entorn client - 2n DAW - IES Jaume II &#34;El Just&#34;" class="md-nav__button md-logo" aria-label="Desenvolupament en entorn client - 2n DAW - IES Jaume II "El Just"" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Desenvolupament en entorn client - 2n DAW - IES Jaume II "El Just"
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../enlla%C3%A7os/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enllaços
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Projecte Biblioteca
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Projecte Biblioteca
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Teoria
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Teoria
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    JS
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            JS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classes_herencia/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Classes i herència
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../convencio_noms/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Convenció de noms
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entrada_eixida/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Entrada eixida en node
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../funcions_arrays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Funcions sobre arrays
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../import_export/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Import i export
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Projecte Biblioteca/Pildores/JS/npm_init.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Començar projecte node
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    BBDD
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            BBDD
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BD/herencia-especialitzacio/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Herència especialització
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BD/camps-calculats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Camps calculats
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_3" id="__nav_3_1_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Node
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Node
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Node/npm_init/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comencem un projecte
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Exercicis
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Exercicis
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../unitats/U0 - Repàs de JS/Tasques/ExerciciPOO.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Repàs de POO amb JS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../unitats/U0 - Repàs de JS/Tasques/BDD.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Incorporem la base de dades
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-creacio-del-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Creació del Dockerfile
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Creació del Dockerfile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dockerfile:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explicacio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Explicació:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-construccio-de-la-imatge-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Construcció de la imatge Docker
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-creacio-del-volum-per-persistencia-de-dades" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Creació del volum per persistència de dades
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Creació del volum per persistència de dades">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacio-del-volum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creació del volum:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llista-de-volums" class="md-nav__link">
+    <span class="md-ellipsis">
+      Llista de volums:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspeccio-dun-volum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspecció d'un volum:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-execucio-del-contenidor-amb-el-volum" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Execució del contenidor amb el volum
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Execució del contenidor amb el volum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comandament-per-executar-el-contenidor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comandament per executar el contenidor:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explicacio_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Explicació:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verificar-la-creacio-de-les-taules" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Verificar la creació de les taules
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Verificar la creació de les taules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accedir-al-contenidor-mysql" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accedir al contenidor MySQL:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comprovar-les-taules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comprovar les taules:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-accedir-als-volums-de-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Accedir als volums de Docker
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-opcio-per-gestionar-la-contrasenya-de-manera-segura-amb-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Opció per gestionar la contrasenya de manera segura amb .env
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Opció per gestionar la contrasenya de manera segura amb .env">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacio-del-fitxer-env" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creació del fitxer .env:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modificar-el-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modificar el Dockerfile:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passar-les-variables-dentorn-al-moment-dexecutar-el-contenidor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Passar les variables d'entorn al moment d'executar el contenidor:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusió
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conclusió">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resum-dels-passos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resum dels passos:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<div><h1 id="documentacio-per-configurar-mysql-en-docker-amb-un-script-sql-i-persistencia-de-dades"><strong>Documentació per configurar MySQL en Docker amb un script SQL i persistència de dades</strong></h1>
+<h2 id="1-creacio-del-dockerfile"><strong>1. Creació del Dockerfile</strong></h2>
+<p>El primer pas és crear un <strong>Dockerfile</strong> personalitzat que utilitzi la imatge oficial de <strong>MySQL</strong> i que carrega l'arxiu SQL per crear les taules i les dades de la base de dades. Aquest Dockerfile inclourà també la configuració necessària per establir la contrasenya de l'usuari <code>root</code>.</p>
+<h3 id="dockerfile"><strong>Dockerfile</strong>:</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Docker</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c"># Utilitzem la imatge oficial de MySQL com a base</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="k">FROM</span><span class="w"> </span><span class="s">mysql:8.0</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c"># Establir la contrasenya per a l'usuari root</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="k">ENV</span><span class="w"> </span><span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>root
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="c"># Copiar l'arxiu SQL al contenidor</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="k">COPY</span><span class="w"> </span>biblioteca_db_creation_updated.sql<span class="w"> </span>/docker-entrypoint-initdb.d/
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="c"># Exposar el port 3306</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">3306</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="explicacio">Explicació:</h3>
+<ul>
+<li><strong><code>FROM mysql:8.0</code></strong>: Utilitza la imatge oficial de MySQL 8.0.</li>
+<li><strong><code>ENV MYSQL_ROOT_PASSWORD=root</code></strong>: Estableix la contrasenya de l'usuari root a <code>root</code>.</li>
+<li><strong><code>COPY biblioteca_db_creation_updated.sql /docker-entrypoint-initdb.d/</code></strong>: Copia l'arxiu SQL al directori especial <strong><code>/docker-entrypoint-initdb.d/</code></strong> perquè MySQL el carregui automàticament al crear la base de dades.</li>
+<li><strong><code>EXPOSE 3306</code></strong>: Exposa el port 3306 per poder connectar-te a MySQL des de l'exterior.</li>
+</ul>
+<h2 id="2-construccio-de-la-imatge-docker"><strong>2. Construcció de la imatge Docker</strong></h2>
+<p>Un cop creat el Dockerfile, utilitza el següent comandament per construir la teva imatge personalitzada de MySQL:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>mysql-biblioteca<span class="w"> </span>.
+</code></pre></div></td></tr></table></div>
+<p>Aquesta ordre construirà una imatge Docker anomenada <strong><code>mysql-biblioteca</code></strong> a partir del Dockerfile i de l'arxiu SQL que has afegit al directori del projecte.</p>
+<h2 id="3-creacio-del-volum-per-persistencia-de-dades"><strong>3. Creació del volum per persistència de dades</strong></h2>
+<p>Els volums Docker s'utilitzen per emmagatzemar dades de manera persistent fora del contenidor. Això permet que les dades no es perdin quan el contenidor es reinicia o s'elimini. Cal crear un volum per MySQL per garantir que les dades es mantinguin segures.</p>
+<h3 id="creacio-del-volum"><strong>Creació del volum:</strong></h3>
+<p>Docker crearà automàticament un volum quan l'executis per primera vegada. Tanmateix, si vols crear i gestionar volums manualment, pots utilitzar aquest comandament:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>docker<span class="w"> </span>volume<span class="w"> </span>create<span class="w"> </span>mysql_data
+</code></pre></div></td></tr></table></div>
+<p>Aquesta comanda crearà un volum anomenat <strong><code>mysql_data</code></strong> que s'utilitzarà per emmagatzemar les dades de la base de dades MySQL.</p>
+<h3 id="llista-de-volums"><strong>Llista de volums</strong>:</h3>
+<p>Per veure els volums disponibles al teu sistema Docker, utilitza el següent comandament:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>docker<span class="w"> </span>volume<span class="w"> </span>ls
+</code></pre></div></td></tr></table></div>
+<h3 id="inspeccio-dun-volum"><strong>Inspecció d'un volum</strong>:</h3>
+<p>Per veure la ubicació física del volum i altres detalls, utilitza:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>docker<span class="w"> </span>volume<span class="w"> </span>inspect<span class="w"> </span>mysql_data
+</code></pre></div></td></tr></table></div>
+<h2 id="4-execucio-del-contenidor-amb-el-volum"><strong>4. Execució del contenidor amb el volum</strong></h2>
+<p>Un cop tinguem el volum creat i la imatge de Docker construïda, podem executar el contenidor de MySQL. Per garantir que les dades siguin persistents, utilitzarem el volum <strong><code>mysql_data</code></strong> creat prèviament.</p>
+<h3 id="comandament-per-executar-el-contenidor"><strong>Comandament per executar el contenidor</strong>:</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>mysql-biblioteca<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">3306</span>:3306<span class="w"> </span>-v<span class="w"> </span>mysql_data:/var/lib/mysql<span class="w"> </span>mysql-biblioteca
+</code></pre></div></td></tr></table></div>
+<h3 id="explicacio_1">Explicació:</h3>
+<ul>
+<li><strong><code>--name mysql-biblioteca</code></strong>: Assigna un nom al contenidor per identificar-lo fàcilment.</li>
+<li><strong><code>-d</code></strong>: Executa el contenidor en segon pla (detached).</li>
+<li><strong><code>-p 3306:3306</code></strong>: Mapeja el port 3306 del contenidor al port 3306 del teu sistema local (per accedir a MySQL des de fora del contenidor).</li>
+<li><strong><code>-v mysql_data:/var/lib/mysql</code></strong>: Munteu el volum <strong><code>mysql_data</code></strong> al directori <strong><code>/var/lib/mysql</code></strong> dins del contenidor, que és on MySQL guarda les seves dades.</li>
+<li><strong><code>mysql-biblioteca</code></strong>: Nom de la imatge que hem creat.</li>
+</ul>
+<h2 id="5-verificar-la-creacio-de-les-taules"><strong>5. Verificar la creació de les taules</strong></h2>
+<p>Un cop el contenidor s'ha engegat, l'arxiu SQL es carregarà automàticament i crearà la base de dades i les taules.</p>
+<p>Per verificar que les taules s'han creat correctament:</p>
+<h3 id="accedir-al-contenidor-mysql"><strong>Accedir al contenidor MySQL</strong>:</h3>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>mysql-biblioteca<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>root<span class="w"> </span>-p
+</code></pre></div></td></tr></table></div>
+<h3 id="comprovar-les-taules"><strong>Comprovar les taules</strong>:</h3>
+<p>Un cop dins de MySQL, pots veure les taules creades:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="n">USE</span><span class="w"> </span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="k">SHOW</span><span class="w"> </span><span class="n">TABLES</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>Si tot ha anat bé, hauràs de veure les taules com <strong><code>Recursos</code></strong>, <strong><code>Llibres</code></strong>, <strong><code>Revistes</code></strong>, <strong><code>Pel·lícules</code></strong>, <strong><code>Socis</code></strong>, i <strong><code>Préstecs</code></strong>.</p>
+<h2 id="6-accedir-als-volums-de-docker"><strong>6. Accedir als volums de Docker</strong></h2>
+<p>Els volums són utilitzats per MySQL per guardar les dades fora del contenidor. Si vols gestionar els volums o veure les dades, pots fer-ho amb els següents comandaments:</p>
+<ul>
+<li><strong>Llistar volums</strong>:</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>docker<span class="w"> </span>volume<span class="w"> </span>ls
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>Inspeccionar un volum</strong>:</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>docker<span class="w"> </span>volume<span class="w"> </span>inspect<span class="w"> </span>mysql_data
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>Eliminar un volum</strong>:</li>
+</ul>
+<p>Si alguna vegada vols eliminar un volum, utilitza:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span>mysql_data
+</code></pre></div></td></tr></table></div>
+<h2 id="7-opcio-per-gestionar-la-contrasenya-de-manera-segura-amb-env"><strong>7. Opció per gestionar la contrasenya de manera segura amb <code>.env</code></strong></h2>
+<p>És important evitar passar dades sensibles com la contrasenya directament al Dockerfile. Una opció més segura és utilitzar un fitxer <strong><code>.env</code></strong> per gestionar les variables d'entorn com la contrasenya.</p>
+<h3 id="creacio-del-fitxer-env"><strong>Creació del fitxer <code>.env</code></strong>:</h3>
+<p>Crea un fitxer anomenat <strong><code>.env</code></strong> al directori del teu projecte amb el següent contingut:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>MYSQL_ROOT_PASSWORD=root
+</code></pre></div></td></tr></table></div>
+<h3 id="modificar-el-dockerfile"><strong>Modificar el Dockerfile</strong>:</h3>
+<p>Elimina la línia que defineix <code>ENV MYSQL_ROOT_PASSWORD</code> al Dockerfile. El Dockerfile serà així:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Docker</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span>
+<span class="normal"><a href="#__codelineno-12-5">5</a></span>
+<span class="normal"><a href="#__codelineno-12-6">6</a></span>
+<span class="normal"><a href="#__codelineno-12-7">7</a></span>
+<span class="normal"><a href="#__codelineno-12-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="c"># Utilitzem la imatge oficial de MySQL com a base</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="k">FROM</span><span class="w"> </span><span class="s">mysql:8.0</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="c"># Copiar l'arxiu SQL al contenidor</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="k">COPY</span><span class="w"> </span>biblioteca_db_creation_updated.sql<span class="w"> </span>/docker-entrypoint-initdb.d/
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="c"># Exposar el port 3306</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">3306</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="passar-les-variables-dentorn-al-moment-dexecutar-el-contenidor"><strong>Passar les variables d'entorn al moment d'executar el contenidor</strong>:</h3>
+<p>Quan executis el contenidor, utilitza el fitxer <strong><code>.env</code></strong> per passar la contrasenya a Docker:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>mysql-biblioteca<span class="w"> </span>--env-file<span class="w"> </span>.env<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">3306</span>:3306<span class="w"> </span>-v<span class="w"> </span>mysql_data:/var/lib/mysql<span class="w"> </span>mysql-biblioteca
+</code></pre></div></td></tr></table></div>
+<p>Aquesta solució és més segura perquè evita passar la contrasenya directament en la línia de comandes o en el Dockerfile.</p>
+<h2 id="conclusio"><strong>Conclusió</strong></h2>
+<p>Seguint aquests passos, has creat un contenidor Docker amb MySQL, has automatitzat la càrrega d'un script SQL per crear la base de dades i les taules, i has configurat la persistència de dades mitjançant un volum Docker. Així les teves dades es mantindran segures fins i tot si el contenidor es reinicia o es crea un nou contenidor.</p>
+<h3 id="resum-dels-passos"><strong>Resum dels passos:</strong></h3>
+<ol>
+<li>Crear el <strong>Dockerfile</strong> amb la configuració de MySQL i el script SQL.</li>
+<li>Construir la imatge Docker amb <code>docker build</code>.</li>
+<li>Crear un volum Docker amb <code>docker volume create</code> per garantir la persistència de les dades.</li>
+<li>Executar el contenidor amb el volum per emmagatzemar les dades de MySQL.</li>
+<li>Verificar les taules i les dades dins del contenidor MySQL.</li>
+<li>Gestionar els volums per mantenir les dades persistents.</li>
+<li>Opció de gestionar la contrasenya de manera més segura mitjançant un fitxer <code>.env</code>.</li>
+</ol></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.copy", "search.suggest"], "search": "../../../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.56dfad97.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
